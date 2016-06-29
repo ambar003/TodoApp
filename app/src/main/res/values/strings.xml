@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TodoApp</string>
+    <string name="Todo">Enter Todo</string>
+    <string name="todo">Todo</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="signin">Sign In</string>
+    <string name="signup">Sign Up</string>
+    <string name="addtask">Add task</string>
+    <string name="email">Email</string>
+    <string name="submit">Submit</string>
+</resources>

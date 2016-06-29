@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    >
+
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/done"
+        android:padding="3dp"
+        android:buttonTint="#000000"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is for my task"
+        android:id="@+id/task"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_toRightOf="@+id/done"
+        android:layout_toEndOf="@+id/done" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task date"
+        android:id="@+id/date"
+        android:textSize="13sp"
+        android:textColor="#000000"
+        android:layout_marginTop="7dp"
+        android:layout_below="@+id/task"
+        android:layout_toRightOf="@+id/done"
+        android:layout_toEndOf="@+id/done" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/overflowmenu"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:padding="20dp"
+        android:clickable="true"
+        android:src="@drawable/ic_action_overflow1"
+        android:layout_alignParentRight="true"
+        />
+
+</RelativeLayout>
