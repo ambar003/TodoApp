@@ -4,9 +4,9 @@
     </style>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#673AB7</item>
-        <item name="colorPrimaryDark">#512DA8</item>
-        <item name="colorAccent">#FF4081</item>
+        <item name="colorPrimary">#3f51b5</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/accent_material_light</item>
     </style>
 
     <style name="Theme.Transparent" parent="AppTheme">
