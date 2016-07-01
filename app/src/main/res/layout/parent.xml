@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:text="Completed todos"
         android:textSize="20sp"
+        android:padding="10dp"
         android:layout_marginLeft="35dp"
         android:id="@+id/heading"
         android:textColor="#000" />

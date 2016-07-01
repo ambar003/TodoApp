@@ -7,11 +7,21 @@ public class todoinfo {
     String task;
     String date;
     int done;
+    int id;
 
-    todoinfo(String task, String date, int done) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    todoinfo(String task, String date, int done, int id) {
         this.task = task;
         this.date = date;
         this.done = done;
+        this.id = id;
     }
 
     public String getTask() {

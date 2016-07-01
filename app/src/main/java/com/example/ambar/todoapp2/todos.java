@@ -1,13 +1,22 @@
 package com.example.ambar.todoapp2;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -40,11 +49,24 @@ public class todos extends AppCompatActivity {
     static StringBuilder sb;
     customAdapter customlist;
     ExpandableListView completetodos;
+    ProgressDialog dialog;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todos);
+        handler = new Handler();
+        dialog = new ProgressDialog(todos.this);
+        dialog.setMessage("Getting todos...");
+        dialog.show();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+            }
+        }, 3000);
+        System.out.println("out of handler");
         init();
         setCompletedtodos();
         add.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +83,7 @@ public class todos extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         date = df.format(c.getTime());
         id = sharedpreferences.getId(getApplicationContext());
-        System.out.println("id"+" "+id);
+        System.out.println("id" + " " + id);
         jsonParam = new JSONObject();
         customlist = new customAdapter(getApplicationContext(), R.layout.listview, str);
         try {
@@ -74,8 +96,8 @@ public class todos extends AppCompatActivity {
             e.printStackTrace();
         }
         if (!task.equals(""))
-            str.add(0, new todoinfo(task, date, 0));
-        todos.requestLayout();
+            str.add(0, new todoinfo(task, date, 0, id));
+//        todos.requestLayout();
         customlist.notifyDataSetChanged();
         addtask.setText("");
         mytask = new addTask();
@@ -138,7 +160,7 @@ public class todos extends AppCompatActivity {
                     out.close();
                     HttpResult = urlConnection.getResponseCode();
                     if (HttpResult != 300) {
-                        System.out.println("urlConnectionResponse"+" "+urlConnection.getResponseMessage());
+                        System.out.println("urlConnectionResponse" + " " + urlConnection.getResponseMessage());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -210,12 +232,13 @@ public class todos extends AppCompatActivity {
                         String t = a.getString("task");
                         String da = a.getString("date");
                         int don = a.getInt("done");
-                        str.add(new todoinfo(t, da, don));
+                        int id = a.getString("taskid").charAt(0) - '0';
+                        str.add(new todoinfo(t, da, don, id));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                customlist = new customAdapter(getApplicationContext(), R.layout.listview, str);
+                customlist = new customAdapter(todos.this, R.layout.listview, str);
                 todos.setAdapter(customlist);
                 todos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -280,7 +303,8 @@ public class todos extends AppCompatActivity {
                         String t = a.getString("task");
                         String da = a.getString("date");
                         int don = a.getInt("done");
-                        completelist.add(new todoinfo(t, da, don));
+                        int id = a.getString("taskid").charAt(0) - '0';
+                        completelist.add(new todoinfo(t, da, don, id));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -290,7 +314,7 @@ public class todos extends AppCompatActivity {
             gru.setItems(completelist);
             ArrayList<group> arr = new ArrayList<>();
             arr.add(gru);
-            expandListAdapter expadapter = new expandListAdapter(getApplicationContext(), arr);
+            expandListAdapter expadapter = new expandListAdapter(todos.this, arr);
             completetodos.setAdapter(expadapter);
         }
     }
@@ -302,5 +326,43 @@ public class todos extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout:
+                logout(getApplicationContext());
+                break;
+        }
+        return true;
+    }
+
+    private void logout(Context context) {
+        SharedPreferences sharedprefrences = context.getSharedPreferences(MainActivity.prefs, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor;
+        editor = sharedprefrences.edit();
+        editor.putBoolean("isFirstTime", true);
+        editor.apply();
+        dialog = new ProgressDialog(todos.this);
+        dialog.setMessage("Logging out...");
+        dialog.show();
+        handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+                Intent intent = new Intent(todos.this, MainActivity.class);
+                todos.this.startActivity(intent);
+                finish();
+            }
+        }, 3000);
     }
 }
