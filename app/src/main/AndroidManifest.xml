@@ -6,7 +6,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/todo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -18,12 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".signin" />
-
-        <!--  -->
-
         <activity android:name=".signup" />
-        <activity
-            android:name=".todos" />
+        <activity android:name=".todos" />
     </application>
 
 </manifest>

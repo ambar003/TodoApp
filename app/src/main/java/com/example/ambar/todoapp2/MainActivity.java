@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
     boolean isFirstTime;
     static String prefs = "My_prefs";
     static String username = "username";
-    SharedPreferences sharedpreferences;
+    public static SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
 
     @Override
@@ -43,10 +43,7 @@ public class MainActivity extends Activity {
                 public void onClick(View v) {
                     etname = name.getText().toString();
                     etpassword = password.getText().toString();
-                    editor.putString(username, etname);
-                    editor.putBoolean("isFirstTime", false);
 //                    System.out.println("Boolean"+" "+sharedpreferences.getBoolean("isFirstTime",true));
-                    editor.apply();
                     Intent intent = new Intent(MainActivity.this, signin.class).putExtra("username", etname).putExtra("password", etpassword);
                     startActivity(intent);
                 }

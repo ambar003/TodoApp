@@ -1,6 +1,7 @@
 <resources>
-    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
-        <item name="android:popupBackground">@android:color/white</item>
+    <style name="ThemeOverlay.Popupmenu" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/primary_text_material_light</item>
+        <item name="android:textColor">@color/black</item>
     </style>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">

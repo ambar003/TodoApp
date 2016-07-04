@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class signin extends Activity {
     String etname,etpassword;
     static JSONObject jsonParam;
     static int HttpResult;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +88,10 @@ public class signin extends Activity {
         protected void onPostExecute(Void aVoid) {
             Dialog.dismiss();
             if (HttpResult == 200) {
-                System.out.println("Login Successful");
+                editor = MainActivity.sharedpreferences.edit();
+                editor.putString(MainActivity.username, etname);
+                editor.putBoolean("isFirstTime", false);
+                editor.apply();
                 new AlertDialog.Builder(signin.this)
                         .setTitle("Status")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {

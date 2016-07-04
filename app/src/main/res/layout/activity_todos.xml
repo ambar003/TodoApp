@@ -19,46 +19,7 @@
             android:id="@+id/flContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/addtask"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:hint="@string/addtask" />
-
-                <ImageView
-                    android:id="@+id/addbutton"
-                    android:layout_width="35dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="300dp"
-                    android:contentDescription="@string/addtask"
-                    android:src="@drawable/add1" />
-
-                <ExpandableListView
-                    android:id="@+id/completetodos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/addtask"
-                    android:layout_marginTop="5dp"
-                    android:childDivider="#00000000"
-                    android:divider="#00000000"
-                    android:dividerHeight="5.0sp" />
-
-                <ListView
-                    android:id="@+id/todoitem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/completetodos"
-                    android:layout_marginTop="5dp"
-                    android:divider="#00000000"
-                    android:dividerHeight="5.0sp" />
-            </RelativeLayout>
-        </FrameLayout>
+            android:layout_margin="10dp" />
     </LinearLayout>
 
     <android.support.design.widget.NavigationView
