@@ -147,11 +147,11 @@ public class expandListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isChecked) {
-                    todos.completelist.remove(childPosition);
+                    Home.completelist.remove(childPosition);
                     notifyDataSetChanged();
                     i.done = 0;
-                    todos.completelist.add(i);
-                    todos.str.add(i);
+                    Home.completelist.add(i);
+                    Home.str.add(i);
                     jsonObject1 = new JSONObject();
                     System.out.println(todos.username + " " + i.id + " " + i.done);
                     try {

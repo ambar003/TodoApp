@@ -239,7 +239,7 @@ public class Home extends Fragment {
                         String t = a.getString("task");
                         String da = a.getString("date");
                         int don = a.getInt("done");
-                        int id = a.getString("taskid").charAt(0) - '0';
+                        int id = Integer.parseInt(a.getString("taskid").trim());
                         str.add(new todoinfo(t, da, don, id));
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -310,7 +310,7 @@ public class Home extends Fragment {
                         String t = a.getString("task");
                         String da = a.getString("date");
                         int don = a.getInt("done");
-                        int id = a.getString("taskid").charAt(0) - '0';
+                        int id = Integer.parseInt(a.getString("taskid").trim());
                         completelist.add(new todoinfo(t, da, don, id));
                     } catch (JSONException e) {
                         e.printStackTrace();

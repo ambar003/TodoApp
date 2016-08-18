@@ -1,11 +1,9 @@
 package com.example.ambar.todoapp2;
 
-import android.app.Activity;
+
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.media.Image;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +16,9 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -35,9 +30,9 @@ import java.util.ArrayList;
 public class customAdapter extends ArrayAdapter {
     viewHolder holder;
     ArrayList<todoinfo> str;
-    String deleteurl,updateurl;
+    String deleteurl, updateurl;
     int HttpResult;
-    JSONObject jsonObject,jsonObject1;
+    JSONObject jsonObject, jsonObject1;
     ProgressDialog dialog;
     expandListAdapter expandlist;
     int done;
@@ -51,7 +46,7 @@ public class customAdapter extends ArrayAdapter {
     }
 
     @Override
-    public View getView( int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -64,7 +59,7 @@ public class customAdapter extends ArrayAdapter {
         todoinfo i = str.get(position);
         if (i != null) {
             initialize(i);
-            checkboxcheck(i,position);
+            checkboxcheck(i, position);
             overflowmenuclick(position);
         }
         return view;
@@ -79,49 +74,49 @@ public class customAdapter extends ArrayAdapter {
             holder.done.setChecked(true);
     }
 
-    private void checkboxcheck(final todoinfo i , final int position) {
-       holder.done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-           @Override
-           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               if(isChecked){
-                   str.remove(position);
-                   notifyDataSetChanged();
-                   i.done = 1;
-                   todos.completelist.add(i);
-                   expandlist.notifyDataSetChanged();
-                   jsonObject1 = new JSONObject();
-                   System.out.println(todos.username+" "+i.id+" "+i.done);
-                   done =1;
-                   try {
-                       jsonObject1.put("done",done);
-                       jsonObject1.put("username",todos.username);
-                       jsonObject1.put("taskid",i.id);
-                   } catch (JSONException e) {
-                       e.printStackTrace();
-                   }
-               }
-               updatetask updatetask = new updatetask();
-               updatetask.execute();
-           }
-       });
+    private void checkboxcheck(final todoinfo i, final int position) {
+        holder.done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    str.remove(position);
+                    notifyDataSetChanged();
+                    i.done = 1;
+                    Home.completelist.add(i);
+                    expandlist.notifyDataSetChanged();
+                    jsonObject1 = new JSONObject();
+                    System.out.println(todos.username + " " + i.id + " " + i.done);
+                    done = 1;
+                    try {
+                        jsonObject1.put("done", done);
+                        jsonObject1.put("username", todos.username);
+                        jsonObject1.put("taskid", i.id);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                updatetask updatetask = new updatetask();
+                updatetask.execute();
+            }
+        });
     }
 
     private void overflowmenuclick(final int position) {
         holder.overflowmenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(getContext(),v );
+                PopupMenu popupMenu = new PopupMenu(getContext(), v);
                 popupMenu.getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         String s = item.getTitle().toString();
                         toast(s);
-                        if(s.equals("Delete")){
+                        if (s.equals("Delete")) {
                             int id = str.get(position).id;
                             jsonObject = new JSONObject();
                             try {
-                                jsonObject.put("taskid",id);
+                                jsonObject.put("taskid", id);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -161,7 +156,7 @@ public class customAdapter extends ArrayAdapter {
         }
     }
 
-    class deletetask extends AsyncTask<Void,Void,Void>{
+    class deletetask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             createDialog();
@@ -204,10 +199,11 @@ public class customAdapter extends ArrayAdapter {
             }
         }
     }
-    class updatetask extends AsyncTask<Void,Void,Void>{
+
+    class updatetask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
-                  createDialog();
+            createDialog();
         }
 
         @Override
@@ -239,23 +235,25 @@ public class customAdapter extends ArrayAdapter {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            if(HttpResult==HttpURLConnection.HTTP_OK){
+            if (HttpResult == HttpURLConnection.HTTP_OK) {
+                dialog.dismiss();
+                System.out.println("dialog dismiss");
                 toast("Added to Complete List");
+            } else {
                 dismissDialog();
-            }
-            else{
                 toast("Error in Adding!!!");
-                dismissDialog();
             }
         }
     }
-    void createDialog(){
-        dialog =new ProgressDialog(context);
+
+    void createDialog() {
+        dialog = new ProgressDialog(context);
         System.out.println("new todos");
         dialog.setMessage("Updating...");
         dialog.show();
     }
-    void dismissDialog(){
+
+    void dismissDialog() {
         dialog.dismiss();
     }
 }
